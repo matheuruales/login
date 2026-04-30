@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar calificacion{% endblock %}
+
+{% block content %}
+<section class="crud-shell">
+    <article class="crud-card">
+        <header class="crud-header">
+            <div>
+                <h1 class="crud-title">Confirmar eliminacion</h1>
+                <p class="crud-subtitle">Esta accion no se puede deshacer.</p>
+            </div>
+            <a class="crud-btn crud-btn-secondary" href="{% url 'listar' %}">Volver al listado</a>
+        </header>
+
+        <div class="crud-body">
+            <p>
+                Vas a eliminar la calificacion de
+                <strong>{{ calificacion.nombre_estudiante }}</strong>
+                en
+                <strong>{{ calificacion.asignatura }}</strong>.
+            </p>
+            <p class="texto-suave">
+                Notas registradas: {{ calificacion.nota1 }}, {{ calificacion.nota2 }}, {{ calificacion.nota3 }}.
+                Promedio actual: {{ calificacion.promedio }}.
+            </p>
+
+            <form method="post" class="crud-actions">
+                {% csrf_token %}
+                <button class="crud-btn crud-btn-danger" type="submit">Eliminar definitivamente</button>
+                <a class="crud-btn crud-btn-secondary" href="{% url 'listar' %}">Cancelar</a>
+            </form>
+        </div>
+    </article>
+</section>
+{% endblock %}
