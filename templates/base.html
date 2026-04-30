@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es-co">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Evaluaciones{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --fondo: #f4efe7;
+            --fondo-panel: #fffdf9;
+            --borde: #d8cbb8;
+            --texto: #2f2923;
+            --texto-suave: #70655a;
+            --principal: #8a4b08;
+            --principal-oscuro: #6b3906;
+            --exito: #2d6a4f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at top left, #f7d9b8 0, transparent 32%),
+                linear-gradient(180deg, #f7f2ea 0%, var(--fondo) 100%);
+            color: var(--texto);
+        }
+
+        a {
+            color: var(--principal);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .contenedor {
+            width: min(960px, calc(100% - 2rem));
+            margin: 0 auto;
+        }
+
+        .encabezado {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(138, 75, 8, 0.14);
+            backdrop-filter: blur(5px);
+        }
+
+        .barra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .marca {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .boton,
+        button {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font: inherit;
+            background: var(--principal);
+            color: white;
+            transition: background 0.2s ease;
+        }
+
+        .boton-secundario {
+            background: transparent;
+            border: 1px solid var(--borde);
+            color: var(--texto);
+        }
+
+        .boton:hover,
+        button:hover {
+            background: var(--principal-oscuro);
+            text-decoration: none;
+        }
+
+        .boton-secundario:hover {
+            background: #efe5d7;
+        }
+
+        main {
+            padding: 2rem 0 3rem;
+        }
+
+        .tarjeta {
+            background: var(--fondo-panel);
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 14px 40px rgba(47, 41, 35, 0.08);
+        }
+
+        .tarjeta h1,
+        .tarjeta h2 {
+            margin-top: 0;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(45, 106, 79, 0.12);
+            color: var(--exito);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .formulario {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--borde);
+            background: #fff;
+            font: inherit;
+        }
+
+        .campo ul,
+        .errores {
+            margin: 0.5rem 0 0;
+            padding-left: 1.2rem;
+            color: #9f1d1d;
+        }
+
+        .texto-suave {
+            color: var(--texto-suave);
+        }
+
+        .acciones {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        @media (max-width: 640px) {
+            .tarjeta {
+                padding: 1.4rem;
+            }
+
+            .barra {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor barra">
+            <a class="marca" href="{% url 'listar' %}">Evaluaciones Academicas</a>
+            <nav class="menu">
+                {% if user.is_authenticated %}
+                    <span class="texto-suave">Sesión iniciada como {{ user.username }}</span>
+                    <form class="logout-form" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-secundario">Cerrar sesión</button>
+                    </form>
+                {% else %}
+                    <a class="boton-secundario" href="{% url 'login' %}">Iniciar sesión</a>
+                    <a class="boton" href="{% url 'register' %}">Crear cuenta</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main class="contenedor">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
