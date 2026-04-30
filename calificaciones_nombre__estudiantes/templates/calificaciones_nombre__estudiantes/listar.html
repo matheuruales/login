@@ -1,18 +1,83 @@
 {% extends "base.html" %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Calificaciones{% endblock %}
 
 {% block content %}
-<section class="tarjeta">
-    <span class="etiqueta">Zona protegida</span>
-    <h1>Base del proyecto lista</h1>
-    <p>
-        Este espacio funciona como destino inicial despues del login y como ejemplo
-        de una vista protegida con <code>LoginRequiredMixin</code>.
-    </p>
-    <p>
-        Los modulos de calificaciones, promedios y logica de negocio quedaran a cargo
-        de las siguientes fases del equipo.
-    </p>
+<section class="crud-shell">
+    <article class="crud-card">
+        <header class="crud-header">
+            <div>
+                <h1 class="crud-title">Registro de calificaciones</h1>
+                <p class="crud-subtitle">
+                    Administra notas por estudiante y asignatura. El promedio se calcula de forma automatica.
+                </p>
+            </div>
+            <div class="crud-actions">
+                <a class="crud-btn crud-btn-secondary" href="{% url 'promedio_general' %}">
+                    Ver promedio general
+                </a>
+                <a class="crud-btn crud-btn-primary" href="{% url 'crear_calificacion' %}">
+                    Nueva calificacion
+                </a>
+            </div>
+        </header>
+
+        <div class="crud-body">
+            {% if calificaciones %}
+                <div class="crud-table-wrap">
+                    <table class="crud-table">
+                        <thead>
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Identificacion</th>
+                                <th>Asignatura</th>
+                                <th>Nota 1</th>
+                                <th>Nota 2</th>
+                                <th>Nota 3</th>
+                                <th>Promedio</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for calificacion in calificaciones %}
+                                <tr>
+                                    <td>{{ calificacion.nombre_estudiante }}</td>
+                                    <td>{{ calificacion.identificacion }}</td>
+                                    <td>{{ calificacion.asignatura }}</td>
+                                    <td>{{ calificacion.nota1 }}</td>
+                                    <td>{{ calificacion.nota2 }}</td>
+                                    <td>{{ calificacion.nota3 }}</td>
+                                    <td>{{ calificacion.promedio }}</td>
+                                    <td>
+                                        <div class="crud-actions">
+                                            <a class="crud-btn crud-btn-secondary" href="{% url 'editar_calificacion' calificacion.pk %}">
+                                                Editar
+                                            </a>
+                                            <a class="crud-btn crud-btn-danger" href="{% url 'eliminar_calificacion' calificacion.pk %}">
+                                                Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="crud-empty">
+                    No hay calificaciones registradas todavia. Usa el boton <strong>Nueva calificacion</strong> para comenzar.
+                </div>
+            {% endif %}
+
+            <p class="crud-avg">
+                Promedio general:
+                {% if promedio_general %}
+                    {{ promedio_general|floatformat:2 }}
+                {% else %}
+                    0.00
+                {% endif %}
+            </p>
+        </div>
+    </article>
 </section>
 {% endblock %}

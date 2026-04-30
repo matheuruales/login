@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Promedio general{% endblock %}
+
+{% block content %}
+<section class="crud-shell">
+    <article class="crud-card">
+        <header class="crud-header">
+            <div>
+                <h1 class="crud-title">Promedio general</h1>
+                <p class="crud-subtitle">Consolidado de todas las calificaciones registradas.</p>
+            </div>
+            <a class="crud-btn crud-btn-secondary" href="{% url 'listar' %}">Volver al listado</a>
+        </header>
+
+        <div class="crud-body">
+            <p class="crud-avg">
+                Valor actual:
+                {% if promedio_general %}
+                    {{ promedio_general|floatformat:2 }}
+                {% else %}
+                    0.00
+                {% endif %}
+            </p>
+        </div>
+    </article>
+</section>
+{% endblock %}
