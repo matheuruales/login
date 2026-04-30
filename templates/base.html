@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es-co">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Evaluaciones{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --fondo: #f4efe7;
+            --fondo-panel: #fffdf9;
+            --borde: #d8cbb8;
+            --texto: #2f2923;
+            --texto-suave: #70655a;
+            --principal: #8a4b08;
+            --principal-oscuro: #6b3906;
+            --exito: #2d6a4f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at top left, #f7d9b8 0, transparent 32%),
+                linear-gradient(180deg, #f7f2ea 0%, var(--fondo) 100%);
+            color: var(--texto);
+        }
+
+        a {
+            color: var(--principal);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .contenedor {
+            width: min(960px, calc(100% - 2rem));
+            margin: 0 auto;
+        }
+
+        .encabezado {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(138, 75, 8, 0.14);
+            backdrop-filter: blur(5px);
+        }
+
+        .barra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .marca {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .boton,
+        button {
+            border: 0;
+            border-radius: 999px;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font: inherit;
+            background: var(--principal);
+            color: white;
+            transition: background 0.2s ease;
+        }
+
+        .boton-secundario {
+            background: transparent;
+            border: 1px solid var(--borde);
+            color: var(--texto);
+        }
+
+        .boton:hover,
+        button:hover {
+            background: var(--principal-oscuro);
+            text-decoration: none;
+        }
+
+        .boton-secundario:hover {
+            background: #efe5d7;
+        }
+
+        main {
+            padding: 2rem 0 3rem;
+        }
+
+        .tarjeta {
+            background: var(--fondo-panel);
+            border: 1px solid var(--borde);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 14px 40px rgba(47, 41, 35, 0.08);
+        }
+
+        .tarjeta h1,
+        .tarjeta h2 {
+            margin-top: 0;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(45, 106, 79, 0.12);
+            color: var(--exito);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .formulario {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--borde);
+            background: #fff;
+            font: inherit;
+        }
+
+        .campo ul,
+        .errores {
+            margin: 0.5rem 0 0;
+            padding-left: 1.2rem;
+            color: #9f1d1d;
+        }
+
+        .texto-suave {
+            color: var(--texto-suave);
+        }
+
+        .acciones {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        /* Estilos especificos para modulo CRUD (inspirado en shadcn/ui). */
+        .crud-shell {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .crud-card {
+            background: #ffffff;
+            border: 1px solid #e4e4e7;
+            border-radius: 14px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        }
+
+        .crud-header {
+            padding: 1.2rem 1.25rem;
+            border-bottom: 1px solid #f4f4f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .crud-title {
+            margin: 0;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #18181b;
+        }
+
+        .crud-subtitle {
+            margin: 0.35rem 0 0;
+            color: #52525b;
+        }
+
+        .crud-body {
+            padding: 1.25rem;
+        }
+
+        .crud-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .crud-form .campo label {
+            color: #27272a;
+            font-size: 0.95rem;
+        }
+
+        .crud-form .campo input {
+            border-radius: 10px;
+            border: 1px solid #d4d4d8;
+            background: #ffffff;
+            color: #18181b;
+        }
+
+        .crud-form .campo input:focus {
+            outline: none;
+            border-color: #18181b;
+            box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1);
+        }
+
+        .crud-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            min-height: 2.45rem;
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .crud-btn-primary {
+            background: #18181b;
+            color: #fafafa;
+        }
+
+        .crud-btn-primary:hover {
+            background: #09090b;
+            text-decoration: none;
+        }
+
+        .crud-btn-secondary {
+            background: #ffffff;
+            border-color: #d4d4d8;
+            color: #27272a;
+        }
+
+        .crud-btn-secondary:hover {
+            background: #f4f4f5;
+            text-decoration: none;
+        }
+
+        .crud-btn-danger {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
+        .crud-btn-danger:hover {
+            background: #b91c1c;
+            text-decoration: none;
+        }
+
+        .crud-table-wrap {
+            overflow-x: auto;
+            border: 1px solid #e4e4e7;
+            border-radius: 12px;
+        }
+
+        .crud-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+            background: #ffffff;
+        }
+
+        .crud-table th,
+        .crud-table td {
+            text-align: left;
+            padding: 0.85rem 0.9rem;
+            border-bottom: 1px solid #f4f4f5;
+        }
+
+        .crud-table th {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #52525b;
+            background: #fafafa;
+        }
+
+        .crud-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .crud-avg {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 10px;
+            background: #fafafa;
+            border: 1px solid #e4e4e7;
+            color: #27272a;
+            font-weight: 600;
+        }
+
+        .crud-empty {
+            padding: 1.1rem;
+            border: 1px dashed #d4d4d8;
+            border-radius: 10px;
+            color: #52525b;
+            background: #fafafa;
+        }
+
+        .crud-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .crud-link-inline {
+            color: #18181b;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .tarjeta {
+                padding: 1.4rem;
+            }
+
+            .barra {
+                align-items: flex-start;
+            }
+
+            .crud-header,
+            .crud-body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="encabezado">
+        <div class="contenedor barra">
+            <a class="marca" href="{% url 'listar' %}">Evaluaciones Academicas</a>
+            <nav class="menu">
+                {% if user.is_authenticated %}
+                    <span class="texto-suave">Sesión iniciada como {{ user.username }}</span>
+                    <form class="logout-form" method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="boton-secundario">Cerrar sesión</button>
+                    </form>
+                {% else %}
+                    <a class="boton-secundario" href="{% url 'login' %}">Iniciar sesión</a>
+                    <a class="boton" href="{% url 'register' %}">Crear cuenta</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main class="contenedor">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

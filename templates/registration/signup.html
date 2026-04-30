@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de usuario{% endblock %}
+
+{% block content %}
+<section class="tarjeta">
+    <span class="etiqueta">Registro</span>
+    <h1>Crear usuario</h1>
+    <p class="texto-suave">Completa el formulario para habilitar el acceso al proyecto.</p>
+
+    {% if form.non_field_errors %}
+        <ul class="errores">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="campo">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="texto-suave">{{ field.help_text }}</small>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+        <div class="acciones">
+            <button type="submit">Registrarme</button>
+            <a href="{% url 'login' %}">Ya tengo cuenta</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
