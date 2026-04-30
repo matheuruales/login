@@ -170,6 +170,175 @@
             margin: 0;
         }
 
+        /* Estilos especificos para modulo CRUD (inspirado en shadcn/ui). */
+        .crud-shell {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .crud-card {
+            background: #ffffff;
+            border: 1px solid #e4e4e7;
+            border-radius: 14px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        }
+
+        .crud-header {
+            padding: 1.2rem 1.25rem;
+            border-bottom: 1px solid #f4f4f5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .crud-title {
+            margin: 0;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #18181b;
+        }
+
+        .crud-subtitle {
+            margin: 0.35rem 0 0;
+            color: #52525b;
+        }
+
+        .crud-body {
+            padding: 1.25rem;
+        }
+
+        .crud-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .crud-form .campo label {
+            color: #27272a;
+            font-size: 0.95rem;
+        }
+
+        .crud-form .campo input {
+            border-radius: 10px;
+            border: 1px solid #d4d4d8;
+            background: #ffffff;
+            color: #18181b;
+        }
+
+        .crud-form .campo input:focus {
+            outline: none;
+            border-color: #18181b;
+            box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1);
+        }
+
+        .crud-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            min-height: 2.45rem;
+            padding: 0.55rem 1rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .crud-btn-primary {
+            background: #18181b;
+            color: #fafafa;
+        }
+
+        .crud-btn-primary:hover {
+            background: #09090b;
+            text-decoration: none;
+        }
+
+        .crud-btn-secondary {
+            background: #ffffff;
+            border-color: #d4d4d8;
+            color: #27272a;
+        }
+
+        .crud-btn-secondary:hover {
+            background: #f4f4f5;
+            text-decoration: none;
+        }
+
+        .crud-btn-danger {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
+        .crud-btn-danger:hover {
+            background: #b91c1c;
+            text-decoration: none;
+        }
+
+        .crud-table-wrap {
+            overflow-x: auto;
+            border: 1px solid #e4e4e7;
+            border-radius: 12px;
+        }
+
+        .crud-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+            background: #ffffff;
+        }
+
+        .crud-table th,
+        .crud-table td {
+            text-align: left;
+            padding: 0.85rem 0.9rem;
+            border-bottom: 1px solid #f4f4f5;
+        }
+
+        .crud-table th {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #52525b;
+            background: #fafafa;
+        }
+
+        .crud-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .crud-avg {
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 10px;
+            background: #fafafa;
+            border: 1px solid #e4e4e7;
+            color: #27272a;
+            font-weight: 600;
+        }
+
+        .crud-empty {
+            padding: 1.1rem;
+            border: 1px dashed #d4d4d8;
+            border-radius: 10px;
+            color: #52525b;
+            background: #fafafa;
+        }
+
+        .crud-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .crud-link-inline {
+            color: #18181b;
+            font-weight: 600;
+        }
+
         @media (max-width: 640px) {
             .tarjeta {
                 padding: 1.4rem;
@@ -177,6 +346,11 @@
 
             .barra {
                 align-items: flex-start;
+            }
+
+            .crud-header,
+            .crud-body {
+                padding: 1rem;
             }
         }
     </style>
