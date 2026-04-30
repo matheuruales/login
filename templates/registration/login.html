@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesion{% endblock %}
+
+{% block content %}
+<section class="tarjeta">
+    <span class="etiqueta">Acceso</span>
+    <h1>Iniciar sesion</h1>
+    <p class="texto-suave">Ingresa con tu cuenta para acceder al sistema de evaluaciones.</p>
+
+    {% if form.non_field_errors %}
+        <ul class="errores">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div class="campo">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="texto-suave">{{ field.help_text }}</small>
+                {% endif %}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        <div class="acciones">
+            <button type="submit">Entrar</button>
+            <a href="{% url 'register' %}">Crear una cuenta</a>
+        </div>
+    </form>
+</section>
+{% endblock %}
