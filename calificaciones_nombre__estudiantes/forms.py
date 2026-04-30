@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import Calificacion
+
 
 class InicioSesionForm(AuthenticationForm):
     """Formulario de autenticacion con etiquetas en espanol."""
@@ -76,3 +78,9 @@ class RegistroUsuarioForm(UserCreationForm):
             usuario.save()
 
         return usuario
+
+
+class CalificacionForm(forms.ModelForm):
+    class Meta:
+        model = Calificacion
+        exclude = ("promedio",)
